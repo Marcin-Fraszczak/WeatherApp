@@ -11,6 +11,7 @@ export class Forecast {
         this.icon = el.querySelector("div.weather__icon").querySelector("img")
         this.forecast = el.querySelector("ul.weather__forecast").querySelectorAll("li")
         this.closeButton = el.querySelector(".btn--close")
+
         this.closeButton.addEventListener("click", () => {
             this.el.parentElement.removeChild(this.el)
         })
