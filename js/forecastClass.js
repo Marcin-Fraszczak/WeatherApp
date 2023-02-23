@@ -1,7 +1,5 @@
 import {findIcon} from "./conditions";
-/*
-Weather module as a class
- */
+
 export class Forecast {
     constructor(el) {
         this.el = el
@@ -16,6 +14,15 @@ export class Forecast {
         this.closeButton.addEventListener("click", () => {
             this.el.parentElement.removeChild(this.el)
         })
+        this.rewriteButton = el.querySelector("span.btn--icon")
+        this.rewriteButton.addEventListener("click", () => {
+            this.city.textContent = prompt("Podaj nową nazwę dla tej lokalizacji:")
+        })
+        // this.rewriteButton.addEventListener("click", this.rewrite)
+    }
+
+    rewrite() {
+        this.city.textContent = prompt("Podaj nową nazwę dla tej lokalizacji:")
     }
 
     updateData(city, temp, press, humid, wind, cond, timeOfDay) {
