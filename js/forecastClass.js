@@ -19,11 +19,6 @@ export class Forecast {
         this.rewriteButton.addEventListener("click", () => {
             this.city.textContent = prompt("Podaj nową nazwę dla tej lokalizacji:")
         })
-        // this.rewriteButton.addEventListener("click", this.rewrite)
-    }
-
-    rewrite() {
-        this.city.textContent = prompt("Podaj nową nazwę dla tej lokalizacji:")
     }
 
     updateData(city, temp, press, humid, wind, cond, timeOfDay) {

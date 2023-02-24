@@ -3,6 +3,7 @@ import {Forecast} from "./forecastClass";
 
 export {normalize, extractData}
 
+const weatherTab = document.querySelector("div.module__weather")
 
 function extractData(data, rawCity) {
     let city = data['location']['name']
@@ -15,7 +16,6 @@ function extractData(data, rawCity) {
     const wind = convertWindSpeed(data['current']['wind_kph'])
     const future = futureForecast(data['forecast']['forecastday'].slice(1))
 
-    const weatherTab = document.querySelector("div.module__weather")
     let clonedWeatherTab = weatherTab.cloneNode(true)
     weatherTab.parentElement.appendChild(clonedWeatherTab)
     const forecast = new Forecast(clonedWeatherTab)

@@ -4,11 +4,12 @@ import {normalize} from "./helpers"
 
 export {showInput}
 
+const formElement = document.querySelector(".module__form")
+let closeButton = formElement.querySelector(".btn--close")
+
 function showInput(e) {
-    const formElement = document.querySelector(".module__form")
     formElement.hidden = false
     formElement.addEventListener("submit", getInput)
-    let closeButton = formElement.querySelector(".btn--close")
     closeButton.addEventListener("click", (e) => {
         formElement.querySelector("input").value = ""
         formElement.hidden = true
@@ -22,6 +23,6 @@ function getInput(e) {
     inputElement.value = ""
     if (rawInput) {
         let city = normalize(rawInput)
-        getData(`https://api.weatherapi.com/v1/forecast.json?key=${config['key']}&q=${city}&days=${config['days']}`, rawInput)
+        getData(config['url'](config['key'], city, config['days']), rawInput)
     }
 }
