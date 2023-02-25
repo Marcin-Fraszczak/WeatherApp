@@ -1,28 +1,34 @@
-import {config} from "./APIconfig";
-import {getData} from "./app"
-import {normalize} from "./helpers"
+import { config } from './APIconfig'
+import { getData } from './app'
+import { normalize, load, unload } from './helpers'
 
-export {showInput}
+const formElement = document.querySelector('.module__form')
+const closeButton = formElement.querySelector('.btn--close')
+const input = formElement.querySelector('input')
 
-const formElement = document.querySelector(".module__form")
-let closeButton = formElement.querySelector(".btn--close")
+async function submit(e) {
+  e.preventDefault()
+  const rawInput = input.value
+  input.value = ''
+  if (rawInput) {
+    const city = normalize(rawInput)
 
-function showInput(e) {
-    formElement.hidden = false
-    formElement.addEventListener("submit", getInput)
-    closeButton.addEventListener("click", (e) => {
-        formElement.querySelector("input").value = ""
-        formElement.hidden = true
-    })
+    load()
+    await getData(config.url(city), rawInput)
+    unload()
+  }
 }
 
-function getInput(e) {
-    e.preventDefault()
-    const inputElement = e.target.querySelector("input")
-    const rawInput = inputElement.value
-    inputElement.value = ""
-    if (rawInput) {
-        let city = normalize(rawInput)
-        getData(config['url'](config['key'], city, config['days']), rawInput)
-    }
+function close() {
+  input.value = ''
+  formElement.hidden = true
+  formElement.removeEventListener('submit', submit)
 }
+
+function showInput() {
+  formElement.hidden = false
+  formElement.addEventListener('submit', submit)
+  closeButton.addEventListener('click', close)
+}
+
+export { showInput }
