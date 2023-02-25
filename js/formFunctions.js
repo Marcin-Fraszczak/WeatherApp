@@ -1,28 +1,31 @@
-import {config} from "./APIconfig";
-import {getData} from "./app"
-import {normalize} from "./helpers"
+import { config } from './APIconfig'
+import { getData } from './app'
+import { normalize, startLoading, stopLoading } from './helpers'
 
-export {showInput}
+const formElement = document.querySelector('.module__form')
+const inputElement = formElement.querySelector('input')
+const closeButton = formElement.querySelector('.btn--close')
 
-const formElement = document.querySelector(".module__form")
-let closeButton = formElement.querySelector(".btn--close")
-
-function showInput(e) {
-    formElement.hidden = false
-    formElement.addEventListener("submit", getInput)
-    closeButton.addEventListener("click", (e) => {
-        formElement.querySelector("input").value = ""
-        formElement.hidden = true
-    })
+export function showInput() {
+  formElement.hidden = false
+  formElement.addEventListener('submit', submit)
+  closeButton.addEventListener('click', close)
 }
 
-function getInput(e) {
-    e.preventDefault()
-    const inputElement = e.target.querySelector("input")
-    const rawInput = inputElement.value
-    inputElement.value = ""
-    if (rawInput) {
-        let city = normalize(rawInput)
-        getData(config['url'](config['key'], city, config['days']), rawInput)
-    }
+async function submit(e) {
+  e.preventDefault()
+  const rawInput = inputElement.value
+  inputElement.value = ''
+  if (rawInput) {
+    let city = normalize(rawInput)
+    startLoading()
+    await getData(config.url(city), rawInput)
+    stopLoading()
+  }
+}
+
+function close() {
+  inputElement.value = ''
+  formElement.hidden = true
+  formElement.removeEventListener('submit', submit)
 }

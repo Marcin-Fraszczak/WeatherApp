@@ -3,31 +3,30 @@ If you are copying only .js files, please remember to comment out this line in i
 <script src="js/app.js"></script>
 Otherwise code will execute twice
  */
+import { config } from './APIconfig'
+import { showInput } from './formFunctions'
+import { extractData, startLoading, stopLoading } from './helpers'
 
-import {config} from "./APIconfig"
-import {showInput} from "./formFunctions"
-import {extractData} from "./helpers"
+const addCityButton = document.querySelector('#add-city')
+addCityButton.addEventListener('click', showInput)
 
-export {getData}
-
-const body = document.querySelector("body")
-const addCityButton = document.querySelector("#add-city")
-addCityButton.addEventListener("click", showInput)
-
-async function getData(url, city) {
-    body.classList.add("loading")
-    try {
-        const response = await fetch(url)
-        if (!(response.ok && response.status === 200)) {
-            throw new Error('Invalid input. Try again with different name.')
-        }
-        const data = await response.json()
-        extractData(data, city)
-    } catch (err) {
-        alert(err)
+export async function getData(url, city) {
+  try {
+    const response = await fetch(url)
+    if (!(response.ok && response.status === 200)) {
+      throw new Error('Niepoprawna nazwa. Spróbuj jeszcze raz.')
     }
-    body.classList.remove("loading")
+    const data = await response.json()
+    extractData(data, city)
+  } catch (err) {
+    alert(err)
+  }
 }
 
-getData(config['url'](config['key'], config['city'], config['days']))
+const initialLoad = async () => {
+  startLoading()
+  await getData(config.url())
+  stopLoading()
+}
 
+initialLoad()
