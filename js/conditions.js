@@ -1,5 +1,5 @@
 /*
-Condition codes from weatherapi.com to decide which icon will be used
+Condition codes from weatherapi.com to decide which icon should be used
  */
 export const findIcon = (code, timeOfDay) => {
   const translator = {
