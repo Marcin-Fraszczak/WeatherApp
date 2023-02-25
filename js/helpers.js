@@ -13,13 +13,13 @@ export function extractData(data, rawCity) {
   const pressure = data.current.pressure_mb
   const humidity = data.current.humidity
   const wind = convertWindSpeed(data.current.wind_kph)
-  const future = futureForecast(data.forecast.forecastday.slice(1))
+  const futureForecastData = futureForecast(data.forecast.forecastday.slice(1))
 
   let clonedWeatherTab = weatherTab.cloneNode(true)
-  weatherTab.parentElement.appendChild(clonedWeatherTab)
+  weatherTab.after(clonedWeatherTab)
   const forecast = new Forecast(clonedWeatherTab)
   forecast.updateData({ city, temperature, pressure, humidity, wind, condition, timeOfDay })
-  forecast.updateForecast(future)
+  forecast.updateForecast(futureForecastData)
   clonedWeatherTab.hidden = false
 }
 
@@ -55,11 +55,11 @@ const dayOrNight = (date) => {
 const convertWindSpeed = (kph) => Math.round((kph / 3.6) * 10) / 10
 
 const futureForecast = (arr) =>
-  arr.map((day) => {
+  arr.map((element) => {
     return {
-      day: getWeekday(day['date']),
-      temp: day['day']['avgtemp_c'],
-      condition: day['day']['condition']['code']
+      day: getWeekday(element.date),
+      temp: element.day.avgtemp_c,
+      condition: element.day.condition.code
     }
   })
 

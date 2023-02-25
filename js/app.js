@@ -19,6 +19,7 @@ export async function getData(url, city) {
     const data = await response.json()
     extractData(data, city)
   } catch (err) {
+    // alert method chosen, so that user doesn't have to open the console
     alert(err)
   }
 }

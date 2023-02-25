@@ -8,6 +8,7 @@ const closeButton = formElement.querySelector('.btn--close')
 
 export function showInput() {
   formElement.hidden = false
+  inputElement.focus()
   formElement.addEventListener('submit', submit)
   closeButton.addEventListener('click', close)
 }
@@ -28,4 +29,5 @@ function close() {
   inputElement.value = ''
   formElement.hidden = true
   formElement.removeEventListener('submit', submit)
+  formElement.removeEventListener('click', close)
 }

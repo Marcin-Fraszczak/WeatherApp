@@ -24,9 +24,9 @@ export class Forecast {
   updateData({ city, temperature, pressure, humidity, wind, condition, timeOfDay }) {
     this.cityElement.textContent = city
     this.temperatureElement.textContent = temperature
-    this.pressureElement.textContent = `${pressure}hPa`
+    this.pressureElement.textContent = `${pressure} hPa`
     this.humidityElement.textContent = `${humidity}%`
-    this.windElement.textContent = `${wind}m/s`
+    this.windElement.textContent = `${wind} m/s`
     this.iconElement.src = findIcon(condition, timeOfDay)
   }
 
